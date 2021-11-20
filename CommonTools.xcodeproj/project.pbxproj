@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		691614672653C5640042F1B2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 691614662653C5640042F1B2 /* Reachability.m */; };
 		693EEA03263FD8F40093744D /* CommonTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693EEA02263FD8F40093744D /* CommonTools.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		691614642653C5630042F1B2 /* CommonTools-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CommonTools-Bridging-Header.h"; sourceTree = "<group>"; };
+		691614652653C5640042F1B2 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		691614662653C5640042F1B2 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		693EE9FF263FD8F40093744D /* libCommonTools.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCommonTools.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		693EEA02263FD8F40093744D /* CommonTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTools.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +62,9 @@
 			isa = PBXGroup;
 			children = (
 				693EEA02263FD8F40093744D /* CommonTools.swift */,
+				691614652653C5640042F1B2 /* Reachability.h */,
+				691614662653C5640042F1B2 /* Reachability.m */,
+				691614642653C5630042F1B2 /* CommonTools-Bridging-Header.h */,
 			);
 			path = CommonTools;
 			sourceTree = "<group>";
@@ -93,6 +100,7 @@
 				TargetAttributes = {
 					693EE9FE263FD8F40093744D = {
 						CreatedOnToolsVersion = 12.5;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -119,6 +127,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				691614672653C5640042F1B2 /* Reachability.m in Sources */,
 				693EEA03263FD8F40093744D /* CommonTools.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -245,11 +254,20 @@
 		693EEA07263FD8F40093744D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F7AP32ZTM5;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "CommonTools/CommonTools-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -258,11 +276,19 @@
 		693EEA08263FD8F40093744D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F7AP32ZTM5;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "CommonTools/CommonTools-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
