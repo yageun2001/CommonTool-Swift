@@ -11,6 +11,7 @@ import Network
 import SystemConfiguration.CaptiveNetwork
 import WebKit
 import GLKit
+import NetworkExtension
 
 public enum WEPInvalidType {
     case ValidWEPType
@@ -100,29 +101,41 @@ public class CommonTools {
         reachability.startNotifier()
         return reachability.currentReachabilityStatus()
     }
+    
     //Get current wifi info
-    public class func fetchWifiInfo() -> WifiInfoClass! {
-        var SSIDInfo: NSDictionary? = nil
+    public class func fetchWifiInfo(completionHandler: @escaping (WifiInfoClass?) -> Void) {
+        if #available(iOS 14.0, *) {
+            NEHotspotNetwork.fetchCurrent { currentNetwork in
+                if let currentNetwork = currentNetwork {
+                    let wifiInfo: WifiInfoClass = WifiInfoClass()
+                    wifiInfo.ssid = currentNetwork.ssid
+                    wifiInfo.bssid = currentNetwork.bssid
+                    completionHandler(wifiInfo)
+                    return
+                }
+                completionHandler(nil)
+            }
+            return
+        }
         
-        if let interfaces = CNCopySupportedInterfaces() as NSArray? {
+        if let interfaces: NSArray = CNCopySupportedInterfaces() {
             for interface in interfaces {
-                SSIDInfo = CNCopyCurrentNetworkInfo(interface as! CFString) as NSDictionary?
-                if SSIDInfo != nil && SSIDInfo!.count > 0 {
-                    break
+                let interfaceName = interface as! String
+                let wifiInfo: WifiInfoClass = WifiInfoClass()
+                
+                if let dict = CNCopyCurrentNetworkInfo(interfaceName as CFString) as NSDictionary? {
+                    wifiInfo.ssid = dict[kCNNetworkInfoKeySSID as String] as? String
+                    wifiInfo.bssid = dict[kCNNetworkInfoKeyBSSID as String] as? String
+                    completionHandler(wifiInfo)
+                    return
                 }
             }
         }
         
-        if SSIDInfo != nil {
-            let wifiInfo: WifiInfoClass = WifiInfoClass()
-            let bssid: String = SSIDInfo?[kCNNetworkInfoKeyBSSID as String] as! String
-            wifiInfo.bssid = CommonTools.standardFormateMAC(MAC: bssid)
-            wifiInfo.ssid = SSIDInfo?[kCNNetworkInfoKeySSID as String] as? String
-            return wifiInfo
-        }
+        completionHandler(nil)
         
-        return nil
     }
+    
     class func standardFormateMAC(MAC: String) -> String{
         let subStr: Array = MAC.components(separatedBy: ":")
         var subStr_M: Array = [String]()
